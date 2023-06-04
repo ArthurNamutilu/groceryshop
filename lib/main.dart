@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => CartModel(),
       child: const MaterialApp(
+        //debug banner
         debugShowCheckedModeBanner: false,
         home: IntroScreen(),
       ),
