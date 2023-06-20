@@ -4,13 +4,13 @@ class CartModel extends ChangeNotifier {
   // list of items on sale
   final List _shopItems = const [
     // [ itemName, itemPrice, imagePath, color ]
-    ["Avocado", "4.00", "lib/images/avocado.png", Colors.green],
-    ["Banana", "2.50", "lib/images/banana.png", Colors.yellow],
-    ["Chicken", "12.80", "lib/images/chicken.png", Colors.brown],
-    ["Water", "1.00", "lib/images/water.png", Colors.blue],
+    ["Avocado", "40.00", "lib/images/avocado.png", Colors.green],
+    ["Banana", "30.00", "lib/images/banana.png", Colors.yellow],
+    ["Chicken", "580.00", "lib/images/chicken.png", Colors.brown],
+    ["Water", "150.00", "lib/images/water.png", Colors.blue],
     ["Ova", "50.00", "lib/images/avocado.png", Colors.redAccent],
-    ["Chicken", "120.80", "lib/images/chicken.png", Colors.pink],
-    ["Chicken", "120.80", "lib/images/chicken.png", Colors.pink],
+    ["Chicken", "580.00", "lib/images/chicken.png", Colors.pink],
+    ["Chicken", "580.00", "lib/images/chicken.png", Colors.pink],
   ];
 
   // list of cart items

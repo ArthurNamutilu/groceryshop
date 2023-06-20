@@ -38,6 +38,18 @@ file
 2.12
 file:///home/arthur/.pub-cache/hosted/pub.dev/file-6.1.4/
 file:///home/arthur/.pub-cache/hosted/pub.dev/file-6.1.4/lib/
+firebase_core
+2.18
+file:///home/arthur/.pub-cache/hosted/pub.dev/firebase_core-2.14.0/
+file:///home/arthur/.pub-cache/hosted/pub.dev/firebase_core-2.14.0/lib/
+firebase_core_platform_interface
+2.18
+file:///home/arthur/.pub-cache/hosted/pub.dev/firebase_core_platform_interface-4.8.0/
+file:///home/arthur/.pub-cache/hosted/pub.dev/firebase_core_platform_interface-4.8.0/lib/
+firebase_core_web
+2.18
+file:///home/arthur/.pub-cache/hosted/pub.dev/firebase_core_web-2.6.0/
+file:///home/arthur/.pub-cache/hosted/pub.dev/firebase_core_web-2.6.0/lib/
 flutter_lints
 2.17
 file:///home/arthur/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/
@@ -178,4 +190,8 @@ flutter_test
 2.17
 file:///home/arthur/snap/flutter/common/flutter/packages/flutter_test/
 file:///home/arthur/snap/flutter/common/flutter/packages/flutter_test/lib/
+flutter_web_plugins
+2.17
+file:///home/arthur/snap/flutter/common/flutter/packages/flutter_web_plugins/
+file:///home/arthur/snap/flutter/common/flutter/packages/flutter_web_plugins/lib/
 2

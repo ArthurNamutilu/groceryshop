@@ -12,7 +12,7 @@ class IntroScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // big logo
+            // banana logo for grocery in intro page
             Padding(
               padding: const EdgeInsets.only(
                 left: 100.0,
@@ -28,14 +28,11 @@ class IntroScreen extends StatelessWidget {
               padding: const EdgeInsets.all(28.0),
               child: Text(
                 'Welcome, Fresh grocery available. You order we deliver',
-                //'Welcome, we deliver groceries at your doorstep',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.notoSerif(
                     fontSize: 36, fontWeight: FontWeight.bold),
               ),
             ),
-
-            // groceree gives you fresh vegetables and fruits
             Text(
               'Fresh grocery items everyday',
               textAlign: TextAlign.center,
@@ -64,7 +61,6 @@ class IntroScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                   color: Colors.pinkAccent,
-//                  color: const Color.fromARGB(255, 112, 91, 222),
                 ),
                 child: const Text(
                   "Start Shopping",
