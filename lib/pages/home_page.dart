@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../components/grocery_item_tile.dart';
 import '../model/cart_model.dart';
 import 'cart_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'intro_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,19 +15,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // sign user in method
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /* ******************************** APP BAR 1 *********************************/
+      // appBar: AppBar(
+      //   //backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: signUserOut,
+      //       icon: const Icon(Icons.logout),
+      //     )
+      //   ],
+      // ),
+      /* ******************************** APP BAR 2 *********************************/
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        // leading: Padding(
-        //   padding: const EdgeInsets.only(left: 24.0),
-        //   child: Icon(
-        //     Icons.location_on,
-        //     color: Colors.grey[700],
-        //   ),
-        // ),
         title: Text(
           'Fresh items',
           style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 import '../components/my_button.dart';
 //import '../components/square_tile.dart';
 
@@ -14,10 +15,23 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  /*      ************** DEFINING SHOW ERROR FUNC *********************** */
+  // void showErrorMessage(String message) {
+  //   Fluttertoast.showToast(
+  //     msg: message,
+  //     toastLength: Toast.LENGTH_SHORT,
+  //     gravity: ToastGravity.BOTTOM,
+  //     timeInSecForIosWeb: 1,
+  //     backgroundColor: Colors.red,
+  //     textColor: Colors.white,
+  //   );
+  // }
+
+  /*      ************** DEFINING SHOW ERROR FUNC *********************** */
   // text editing controllers
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
 // sign user up method
   void signUserUp() async {
@@ -31,14 +45,23 @@ class _RegisterPageState extends State<RegisterPage> {
       },
     );
 
-    // try sign in
+    // try create new user
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text, password: passwordController.text);
+    Navigator.pop(context);
+/* *********************************** Start *************************************************/
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      // check if password and confirm password is the same
+      if (passwordController == confirmPasswordController) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+      }
+      // passwords not same error message
+      //showErrorMessage("Passwords don't match");
       // pop the loading circle
-      Navigator.pop(context);
+      // Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
       Navigator.pop(context);
@@ -52,8 +75,11 @@ class _RegisterPageState extends State<RegisterPage> {
       else if (e.code == 'wrong-password') {
         // show error to user
         wrongPasswordMessage();
+      } else if (e.code == 'badly formatted') {
+        badEmailFormatMessage();
       }
     }
+    /* *********************************** Stop *************************************************/
   }
 
   // wrong email message popup
@@ -66,6 +92,24 @@ class _RegisterPageState extends State<RegisterPage> {
           title: Center(
             child: Text(
               'Incorrect Email',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  // wrong email format popup
+  void badEmailFormatMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          backgroundColor: Colors.deepPurple,
+          title: Center(
+            child: Text(
+              'Incorrect Email Format',
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -142,13 +186,13 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 10),
 
               // confirm password textfield
-              MyTextField(
-                controller: passwordController,
-                hintText: 'confirm Password',
-                obscureText: true,
-              ),
+              // MyTextField(
+              //   controller: confirmPasswordController,
+              //   hintText: 'confirm Password',
+              //   obscureText: true,
+              // ),
 
-              const SizedBox(height: 10),
+              // const SizedBox(height: 10),
 
               // forgot password?
               Padding(

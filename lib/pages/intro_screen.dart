@@ -1,17 +1,78 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class IntroScreen extends StatelessWidget {
-  const IntroScreen({super.key});
+  IntroScreen({super.key});
+
+  final user = FirebaseAuth.instance.currentUser!;
+
+  // Retrive image from firestore
+  // void fetchData() async {
+  //   QuerySnapshot snapshot =
+  //       await FirebaseFirestore.instance.collection('products').get();
+  //   List<QueryDocumentSnapshot> documents = snapshot.docs;
+
+  //   // process each document
+  //   for (QueryDocumentSnapshot doc in documents) {
+  //     String name = doc.data()['name'];
+  //     int price = doc.data()['price'];
+  //     String imageUrl = doc.data()['image'];
+  //   }
+  // }
+
+  //import 'package:cloud_firestore/cloud_firestore.dart';
+
+// Retrieve data from Firestore
+// Retrieve data from Firestore
+  // void fetchProductData() async {
+  //   QuerySnapshot snapshot =
+  //       await FirebaseFirestore.instance.collection('products').get();
+  //   List<QueryDocumentSnapshot> documents = snapshot.docs;
+
+  //   // Process each document
+  //   for (QueryDocumentSnapshot doc in documents) {
+  //     Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+  //     if (data != null) {
+  //       String? name = data['name'] as String?;
+  //       int? price = data['price'] as int?;
+  //       String? imageUrl = data['imageUrl'] as String?;
+
+  //       // Use the data in your app
+  //       if (name != null && price != null && imageUrl != null) {
+  //         print('Name: $name, Price: $price, Image URL: $imageUrl');
+  //       }
+  //     }
+  //   }
+  // }
+
+  // sign user out method
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
+      appBar: AppBar(
+        title: Text('user: ${user.email!}'),
+        actions: [
+          IconButton(
+            onPressed: signUserOut,
+            icon: const Icon(Icons.logout),
+          )
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [
+            // Text(
+            //   "LOGGED IN AS : ${user.email!}",
+            //   style: const TextStyle(fontSize: 20),
+            // ),
             // banana logo for grocery in intro page
             Padding(
               padding: const EdgeInsets.only(
@@ -47,6 +108,7 @@ class IntroScreen extends StatelessWidget {
             const Spacer(),
 
             // get started button
+
             GestureDetector(
               onTap: () => Navigator.pushReplacement(
                 context,
