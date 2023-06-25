@@ -1,34 +1,158 @@
+// import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+// class HomePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Shopping App'),
+//       ),
+//       body: StreamBuilder<QuerySnapshot>(
+//         stream: FirebaseFirestore.instance.collection('products').snapshots(),
+//         builder: (context, snapshot) {
+//           if (!snapshot.hasData) {
+//             return Center(
+//               child: CircularProgressIndicator(),
+//             );
+//           }
+
+//           final products = snapshot.data!.docs;
+
+//           return ListView.builder(
+//             itemCount: products.length,
+//             itemBuilder: (context, index) {
+//               final product = products[index].data() as Map<String, dynamic>;
+//               final itemName = product['name'] as String;
+//               final itemPrice = product['price'] as int;
+//               final imageUrl = product['image'] as String;
+
+//               return FutureBuilder<String>(
+//                 future: firebase_storage.FirebaseStorage.instance
+//                     .ref(imageUrl)
+//                     .getDownloadURL(),
+//                 builder: (context, snapshot) {
+//                   if (!snapshot.hasData) {
+//                     return Center(
+//                       child: CircularProgressIndicator(),
+//                     );
+//                   }
+
+//                   final downloadUrl = snapshot.data!;
+
+//                   return ListTile(
+//                     leading: Image.network(downloadUrl),
+//                     title: Text(itemName),
+//                     subtitle: Text('Price: \$$itemPrice'),
+//                   );
+//                 },
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+// MORE ERRORS
+// import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
+// class HomePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Shopping App'),
+//       ),
+//       body: StreamBuilder<QuerySnapshot>(
+//         stream: FirebaseFirestore.instance.collection('products').snapshots(),
+//         builder: (context, snapshot) {
+//           if (!snapshot.hasData) {
+//             return Center(
+//               child: CircularProgressIndicator(),
+//             );
+//           }
+
+//           final products = snapshot.data!.docs;
+
+//           return ListView.builder(
+//             itemCount: products.length,
+//             itemBuilder: (context, index) {
+//               final product = products[index].data() as Map<String, dynamic>;
+//               final itemName = product['name'] as String;
+//               final itemPrice = product['price'] as int;
+//               final imageUrl = product['image'] as String;
+
+//               return FutureBuilder<Uri>(
+//                 future: firebase_storage.FirebaseStorage.instance
+//                     .refFromURL(imageUrl)
+//                     .getDownloadURL(),
+//                 builder: (context, snapshot) {
+//                   if (!snapshot.hasData) {
+//                     return Center(
+//                       child: CircularProgressIndicator(),
+//                     );
+//                   }
+
+//                   final downloadUrl = snapshot.data!;
+
+//                   return ListTile(
+//                     leading: Image.network(downloadUrl.toString()),
+//                     title: Text(itemName),
+//                     subtitle: Text('Price: \$$itemPrice'),
+//                   );
+//                 },
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+
+// EVEN BETTER
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class StoredData extends StatefulWidget {
-  @override
-  _StoredDataState createState() => _StoredDataState();
-}
-
-class _StoredDataState extends State<StoredData> {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Stored Data'),
+        title: Text('Shopping App'),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('products').snapshots(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView(
-              children: snapshot.data!.docs.map((doc) {
-                return ListTile(
-                  title: Text(doc['name']),
-                  subtitle: Text(doc['price'].toString()),
-                  //trailing: Text(doc['image']),
-                );
-              }).toList(),
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          } else {
-            return Center(child: Text('No data'));
           }
+
+          final products = snapshot.data!.docs;
+
+          return ListView.builder(
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              final product = products[index].data() as Map<String, dynamic>;
+              final itemName = product['name'] as String;
+              final itemPrice = product['price'] as int;
+              final imageUrl = product['image'] as String;
+
+              return ListTile(
+                //leading: Image.asset('lib/images/banana.png'),
+                leading: Image.network(imageUrl),
+                title: Text(itemName),
+                subtitle: Text('Price: Ksh $itemPrice'),
+              );
+            },
+          );
         },
       ),
     );
@@ -36,151 +160,80 @@ class _StoredDataState extends State<StoredData> {
 }
 
 
-
-
-
-
-
-// import 'package:firebase/firebase.dart';
-
-// void main() {
-//   // Create a DatabaseReference object to the Firebase database.
-//   var ref = FirebaseDatabase.instance.ref("users/123");
-
-//   // Use the once() method to retrieve the data once.
-//   Future<DatabaseEvent> event = ref.once();
-
-//   // Listen for the event and get the data.
-//   event.then((event) {
-//     // Get the data as a Dart object.
-//     var data = event.snapshot.value;
-
-//     // Display the data in your Flutter app.
-//     print(data);
-//   });
-// }
-
-
-
+// FROM chatGPT => working
 // import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
 
-// class MyData extends StatefulWidget {
-//   @override
-//   _MyDataState createState() => _MyDataState();
-// }
-
-// class _MyDataState extends State<MyData> {
-//   List<Map<String, dynamic>> dataList = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchData();
-//   }
-
-//   Future<void> fetchData() async {
-//     QuerySnapshot snapshot =
-//         await FirebaseFirestore.instance.collection('products').get();
-//     List<QueryDocumentSnapshot> documents = snapshot.docs;
-
-//     List<Map<String, dynamic>> fetchedData = [];
-
-//     // Process each document
-//     for (QueryDocumentSnapshot doc in documents) {
-//       Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-//       if (data != null) {
-//         String? name = data['name'] as String?;
-//         int? price = data['price'] as int?;
-//         String? imageUrl = data['imageUrl'] as String?;
-
-//         // Add the data to the list
-//         if (name != null && price != null && imageUrl != null) {
-//           fetchedData.add({
-//             'name': name,
-//             'price': price,
-//             'imageUrl': imageUrl,
-//           });
-//         }
-//       }
-//     }
-
-//     setState(() {
-//       dataList = fetchedData;
-//     });
-//   }
-
+// class StoredData extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: Text('My Data'),
+//         title: Text('Stored Data'),
 //       ),
-//       body: dataList.isNotEmpty
-//           ? ListView.builder(
-//               itemCount: dataList.length,
-//               itemBuilder: (context, index) {
-//                 final item = dataList[index];
-//                 return ListTile(
-//                   title: Text(item['name']),
-//                   subtitle: Text('Price: ${item['price']}'),
-//                   leading: Image.network(item['imageUrl']),
-//                 );
-//               },
-//             )
-//           : Center(
-//               child: Text('Fetching data from Firestore...'),
-//             ),
+//       body: StreamBuilder<QuerySnapshot>(
+//         stream: FirebaseFirestore.instance.collection('products').snapshots(),
+//         builder: (context, snapshot) {
+//           if (!snapshot.hasData) {
+//             return Center(
+//               child: CircularProgressIndicator(),
+//             );
+//           }
+
+//           List<DocumentSnapshot> documents = snapshot.data!.docs;
+//           return ListView.builder(
+//             itemCount: documents.length,
+//             itemBuilder: (context, index) {
+//               String name = documents[index]['name'];
+//               int age = documents[index]['price'];
+//               String city = documents[index]['image'];
+
+//               return ListTile(
+//                 title: Text(name),
+//                 subtitle: Text('Age: $age, City: $city'),
+//               );
+//             },
+//           );
+//         },
+//       ),
 //     );
 //   }
 // }
 
-/* ****************************************************************** */
+
+// FROM bard.google => working
 // import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
-// class MyData extends StatefulWidget {
+// class StoredData extends StatefulWidget {
 //   @override
-//   _MyDataState createState() => _MyDataState();
+//   _StoredDataState createState() => _StoredDataState();
 // }
 
-// class _MyDataState extends State<MyData> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     fetchData();
-//   }
-
-//   Future<void> fetchData() async {
-//     QuerySnapshot snapshot =
-//         await FirebaseFirestore.instance.collection('products').get();
-//     List<QueryDocumentSnapshot> documents = snapshot.docs;
-
-//     // Process each document
-//     for (QueryDocumentSnapshot doc in documents) {
-//       Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-//       if (data != null) {
-//         String? name = data['name'] as String?;
-//         int? price = data['price'] as int?;
-//         String? imageUrl = data['imageUrl'] as String?;
-
-//         // Use the data in your app
-//         if (name != null && price != null && imageUrl != null) {
-//           print('Name: $name, Price: $price, Image URL: $imageUrl');
-//         }
-//       }
-//     }
-//   }
-
+// class _StoredDataState extends State<StoredData> {
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: Text('My Data'),
+//         title: Text('Stored Data'),
 //       ),
-//       body: Center(
-//         child: Text('Fetching data from Firestore...'),
+//       body: StreamBuilder<QuerySnapshot>(
+//         stream: FirebaseFirestore.instance.collection('products').snapshots(),
+//         builder: (context, snapshot) {
+//           if (snapshot.hasData) {
+//             return ListView(
+//               children: snapshot.data!.docs.map((doc) {
+//                 return ListTile(
+//                   title: Text(doc['name']),
+//                   subtitle: Text(doc['price'].toString()),
+//                   //trailing: Text(doc['image']),
+//                 );
+//               }).toList(),
+//             );
+//           } else {
+//             return Center(child: Text('No data'));
+//           }
+//         },
 //       ),
 //     );
 //   }
