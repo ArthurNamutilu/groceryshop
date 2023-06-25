@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -20,49 +21,69 @@ class _HomePageState extends State<HomePage> {
     FirebaseAuth.instance.signOut();
   }
 
+  // document IDs
+  List<String> docIDs = [];
+
+  // get docIDs
+  Future getDocId() async {
+    await FirebaseFirestore.instance.collection('products').get().then(
+          (snapshot) => snapshot.docs.forEach((document) {
+            print(document.reference);
+            docIDs.add(document.reference.id);
+          }),
+        );
+  }
+
+  @override
+  void initState() {
+    getDocId();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       /* ******************************** APP BAR 1 *********************************/
-      // appBar: AppBar(
-      //   //backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   actions: [
-      //     IconButton(
-      //       onPressed: signUserOut,
-      //       icon: const Icon(Icons.logout),
-      //     )
-      //   ],
-      // ),
-      /* ******************************** APP BAR 2 *********************************/
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        //backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          'Fresh items',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[700],
-          ),
-        ),
-        centerTitle: false,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 24.0),
-            child: Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(
-                Icons.person,
-                color: Colors.grey,
-              ),
-            ),
-          ),
+          IconButton(
+            onPressed: signUserOut,
+            icon: const Icon(Icons.logout),
+          )
         ],
       ),
+      /* ******************************** APP BAR 2 *********************************/
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   title: Text(
+      //     'Fresh items',
+      //     style: TextStyle(
+      //       fontSize: 16,
+      //       color: Colors.grey[700],
+      //     ),
+      //   ),
+      //   centerTitle: false,
+      //   actions: [
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 24.0),
+      //       child: Container(
+      //         padding: const EdgeInsets.all(16),
+      //         decoration: BoxDecoration(
+      //           color: Colors.grey[200],
+      //           borderRadius: BorderRadius.circular(12),
+      //         ),
+      //         child: const Icon(
+      //           Icons.person,
+      //           color: Colors.grey,
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
+      // end
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         onPressed: () => Navigator.push(
