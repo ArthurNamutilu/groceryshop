@@ -107,14 +107,14 @@ class IntroScreen extends StatelessWidget {
 
             const Spacer(),
 
-            // get started button
+            // start shopping button
 
             GestureDetector(
               onTap: () => Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return HomePage();
+                    return const HomePage();
                   },
                 ),
               ),
@@ -122,7 +122,7 @@ class IntroScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: Colors.pinkAccent,
+                  color: const Color.fromARGB(255, 9, 212, 151),
                 ),
                 child: const Text(
                   "Start Shopping",
